@@ -93,9 +93,9 @@ def shutdown_protocol(sensor_log = None, error_log = None):
 
 
 if __name__ == '__main__':
-    update_interval = 1 # Console Update Interval (Seconds), Default: 5
-    record_interval = 5 # Data Record Interval (Seconds), Default: 120
-    store_interval = 60 # Data Save Record Interval (Seconds), Default: 7200
+    update_interval = 5 # Console Update Interval (Seconds), Default: 5
+    record_interval = 120 # Data Record Interval (Seconds), Default: 120
+    store_interval = 7200 # Data Save Record Interval (Seconds), Default: 7200
 
     # update the names of these variables to change output name.
     region_one = 'Region One Temperature and RH is'
