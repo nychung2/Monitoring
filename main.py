@@ -160,6 +160,7 @@ if __name__ == '__main__':
             
 
         # Posts data collected to the display.
+        print('')
         print(colored('=======PT2 Instrument Monitoring Sub-Assembly=======','blue'))
         print(colored(region_one), colored(str('%.1f'%data_array[1][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[1][1]) + '% RH', ambient_status(data_array[1][1])[0]))
         print(colored(region_two), colored(str('%.1f'%data_array[2][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[2][1]) + '% RH', ambient_status(data_array[1][1])[0]))
@@ -173,11 +174,10 @@ if __name__ == '__main__':
         print(colored('Region Two'), colored(ambient_status(data_array[1][1])[1]))
         print(colored('Thermistor One'), colored(component_status(component = 't1', value = data_array[4][0])[1], component_status(component = 't1', value = data_array[4][0])[0]))
         print(colored('Thermistor Two'), colored(component_status(component = 't2', value = data_array[4][1])[1], component_status(component = 't2', value = data_array[4][1])[0]))
-        print(colored('Thermistor Three'), colored(component_status(component = 't3', value = data_array[4][2])[1], component_status(component = 't3', value = data_array[4][1])[0]))
-        print(colored('Thermistor Four'), colored(component_status(component = 't4', value = data_array[4][3])[1], component_status(component = 't4', value = data_array[4][1])[0]))
-        print(colored('Current Draw'), colored(component_status(component = 'cs', value = data_array[4][4])[1], component_status(component = 'cs', value = data_array[4][1])[0]))
+        print(colored('Thermistor Three'), colored(component_status(component = 't3', value = data_array[4][2])[1], component_status(component = 't3', value = data_array[4][2])[0]))
+        print(colored('Thermistor Four'), colored(component_status(component = 't4', value = data_array[4][3])[1], component_status(component = 't4', value = data_array[4][3])[0]))
+        print(colored('Current Draw'), colored(component_status(component = 'cs', value = data_array[4][4])[1], component_status(component = 'cs', value = data_array[4][4])[0]))
         print(colored("Data Last Backed Up:"), colored(recent_backup_date, 'magenta'))
-        print(colored('=======PT2 Instrument Monitoring Sub-Assembly=======','blue'))
         print('')
 
         current_interval += update_interval
