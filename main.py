@@ -148,6 +148,7 @@ if __name__ == '__main__':
     current2_interval = 0
     recent_backup_date = 'N/A'
     storage_array = ['timestamp', 'sht1', 'sht2', 'am_sens', 'adc_array']
+    time.sleep(5)
     # Run Scripting Loop
     while True:
         data_array = collect_data(sht35_a = first_sht35, sht35_b = second_sht35, am2302 = am2302_sensor, adc = adc_sensor)
