@@ -140,7 +140,7 @@ if __name__ == '__main__':
     while True:
         data_array = collect_data(sht35_a = first_sht35, sht35_b = second_sht35, am2302 = am2302_sensor, adc = adc_sensor)
         
-        path = '/home/pi/PT2Program/DataLogs/'
+        path = '/home/pi/DataLogs/'
         
         if (current_interval / record_interval == 1): 
             np.vstack((storage_array, np.asarray(data_array)))
