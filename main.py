@@ -48,8 +48,8 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
 
 def ambient_status(value = None):
     if (value < 10):
-        return 'cyan', 'is ready'
-    return 'yellow', 'is not ready'
+        return 'cyan', 'ready'
+    return 'yellow', 'not ready'
 
 def component_status(component = None, value = None, log_file = None):
     if (component == 't1'):
@@ -169,14 +169,14 @@ if __name__ == '__main__':
         print(colored(thermistor_three), colored(str('%.1f'%data_array[4][2]) + ' C', component_status(component = 't3', value = data_array[4][2])[0]))
         print(colored(thermistor_four), colored(str('%.1f'%data_array[4][3]) + ' C', component_status(component = 't4', value = data_array[4][3])[0]))
         print(colored(current_sensor_o), colored(str('%.1f'%data_array[4][4]) + ' A', component_status(component = 'cs', value = data_array[4][4])[0]))
-        print(colored('===================System Status===================','blue'))
-        print(colored('Region One'), colored(ambient_status(data_array[1][1])[1]))
-        print(colored('Region Two'), colored(ambient_status(data_array[1][1])[1]))
-        print(colored('Thermistor One'), colored(component_status(component = 't1', value = data_array[4][0])[1], component_status(component = 't1', value = data_array[4][0])[0]))
-        print(colored('Thermistor Two'), colored(component_status(component = 't2', value = data_array[4][1])[1], component_status(component = 't2', value = data_array[4][1])[0]))
-        print(colored('Thermistor Three'), colored(component_status(component = 't3', value = data_array[4][2])[1], component_status(component = 't3', value = data_array[4][2])[0]))
-        print(colored('Thermistor Four'), colored(component_status(component = 't4', value = data_array[4][3])[1], component_status(component = 't4', value = data_array[4][3])[0]))
-        print(colored('Current Draw'), colored(component_status(component = 'cs', value = data_array[4][4])[1], component_status(component = 'cs', value = data_array[4][4])[0]))
+        print(colored('===================System Status====================','blue'))
+        print(colored('Region One is'), colored(ambient_status(data_array[1][1])[1], ambient_status(data_array[1][1])[0]))
+        print(colored('Region Two is'), colored(ambient_status(data_array[2][2])[1],ambient_status(data_array[2][2])[0]))
+        print(colored('Thermistor One is'), colored(component_status(component = 't1', value = data_array[4][0])[1], component_status(component = 't1', value = data_array[4][0])[0]))
+        print(colored('Thermistor Two is'), colored(component_status(component = 't2', value = data_array[4][1])[1], component_status(component = 't2', value = data_array[4][1])[0]))
+        print(colored('Thermistor Three is'), colored(component_status(component = 't3', value = data_array[4][2])[1], component_status(component = 't3', value = data_array[4][2])[0]))
+        print(colored('Thermistor Four is'), colored(component_status(component = 't4', value = data_array[4][3])[1], component_status(component = 't4', value = data_array[4][3])[0]))
+        print(colored('Current Draw is'), colored(component_status(component = 'cs', value = data_array[4][4])[1], component_status(component = 'cs', value = data_array[4][4])[0]))
         print(colored("Data Last Backed Up:"), colored(recent_backup_date, 'magenta'))
         print('')
 
