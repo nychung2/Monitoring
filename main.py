@@ -120,6 +120,7 @@ if __name__ == '__main__':
 
     # Initialize Sensors as Objects
     # Will also store a log everytime this file runs.
+    print('Initializing Sensors')
     try:
         first_sht35 = sensor.SHT35(address = 0x45, bus = 1)
     except:
@@ -136,7 +137,7 @@ if __name__ == '__main__':
         am2302_sensor = sensor.AM2302() # fill this in.
     except: 
         am2302_sensor = None
-    #    print("AM2302 Sensor Failed to Connect")
+        print("AM2302 Sensor Failed to Connect")
 
     try:
         adc_sensor = sensor.ADS7828(bus = 6)
@@ -148,7 +149,7 @@ if __name__ == '__main__':
     current2_interval = 0
     recent_backup_date = 'N/A'
     storage_array = ['timestamp', 'sht1', 'sht2', 'am_sens', 'adc_array']
-    time.sleep(5)
+    time.sleep(3)
     # Run Scripting Loop
     while True:
         data_array = collect_data(sht35_a = first_sht35, sht35_b = second_sht35, am2302 = am2302_sensor, adc = adc_sensor)
