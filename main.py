@@ -16,15 +16,15 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
     try:
         sht1 = sht35_a.read()
     except:
-        sht1 = [0,0]
+        sht1 = [-99, -99]
     
     # Region Two
     try:
         sht2 = sht35_b.read()
         am_sens = am2302.read()
     except:
-        sht2 = [0,0]
-        am_sens = [0,0]
+        sht2 = [-99, -99]
+        am_sens = [-99, -99]
 
     # Surface Temperature and Current Sensing
     try:
@@ -47,7 +47,7 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
     return timestamp, sht1, sht2, am_sens, adc_array
 
 def ambient_status(value = None):
-    if (value is None):
+    if (value == -99):
             return 'red', 'not connected'
     if (value < 10):
         return 'cyan', 'ready'
