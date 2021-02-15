@@ -47,32 +47,44 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
     return timestamp, sht1, sht2, am_sens, adc_array
 
 def ambient_status(value = None):
+    if (value is None):
+            return 'red', 'not connected'
     if (value < 10):
         return 'cyan', 'ready'
     return 'yellow', 'not ready'
 
 def component_status(component = None, value = None, log_file = None):
     if (component == 't1'):
+        if (value is None):
+            return 'red', 'not connected'
         if (value > 30 or value < 15): # arbitrary limits for now.
             return 'red', 'outside nominal range'
         else:
             return 'green', 'operating normally'
     if (component == 't2'):
+        if (value is None):
+            return 'red', 'not connected'
         if (value > 30 or value < 15): # arbitrary limits for now.
             return 'red', 'outside nominal range'
         else:
             return 'green', 'operating normally'
     if (component == 't3'):
+        if (value is None):
+            return 'red', 'not connected'
         if (value > 30 or value < 15): # arbitrary limits for now.
             return 'red', 'outside nominal range'
         else:
             return 'green', 'operating normally'
     if (component == 't4'):
+        if (value is None):
+            return 'red', 'not connected'
         if (value > 30 or value < 15): # arbitrary limits for now.
             return 'red', 'outside nominal range'
         else:
             return 'green', 'operating normally'
     if (component == 'cs'):
+        if (value is None):
+            return 'red', 'not connected'
         if (value > 30 or value < 15): # arbitrary limits for now.
             return 'red', 'outside nominal range'
         else:
