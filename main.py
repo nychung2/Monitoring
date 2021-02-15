@@ -48,35 +48,35 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
 
 def ambient_status(value = None):
     if (value < 10):
-        return 'cyan'
-    return 'yellow'
+        return 'cyan', 'is ready'
+    return 'yellow', 'is not ready'
 
 def component_status(component = None, value = None, log_file = None):
     if (component == 't1'):
         if (value > 30 or value < 15): # arbitrary limits for now.
-            return 'red'
+            return 'red', 'outside nominal range'
         else:
-            return 'green'
+            return 'green', 'operating normally'
     if (component == 't2'):
         if (value > 30 or value < 15): # arbitrary limits for now.
-            return 'red'
+            return 'red', 'outside nominal range'
         else:
-            return 'green'
+            return 'green', 'operating normally'
     if (component == 't3'):
         if (value > 30 or value < 15): # arbitrary limits for now.
-            return 'red'
+            return 'red', 'outside nominal range'
         else:
-            return 'green'
+            return 'green', 'operating normally'
     if (component == 't4'):
         if (value > 30 or value < 15): # arbitrary limits for now.
-            return 'red'
+            return 'red', 'outside nominal range'
         else:
-            return 'green'
+            return 'green', 'operating normally'
     if (component == 'cs'):
         if (value > 30 or value < 15): # arbitrary limits for now.
-            return 'red'
+            return 'red', 'outside nominal range'
         else:
-            return 'green'
+            return 'green', 'operating normally'
     return 'green'
 
 def write_new_file(array = None, path = None, timestamp = None):
@@ -161,14 +161,24 @@ if __name__ == '__main__':
 
         # Posts data collected to the display.
         print(colored('=======PT2 Instrument Monitoring Sub-Assembly=======','blue'))
-        print(colored(region_one), colored(str('%.1f'%data_array[1][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[1][1]) + '% RH', ambient_status(data_array[1][1])))
-        print(colored(region_two), colored(str('%.1f'%data_array[2][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[2][1]) + '% RH', ambient_status(data_array[1][1])))
-        print(colored(thermistor_one), colored(str('%.1f'%data_array[4][0]) + ' C', component_status(component = 't1', value = data_array[4][0])))
-        print(colored(thermistor_two), colored(str('%.1f'%data_array[4][1]) + ' C', component_status(component = 't2', value = data_array[4][1])))
-        print(colored(thermistor_three), colored(str('%.1f'%data_array[4][2]) + ' C', component_status(component = 't3', value = data_array[4][2])))
-        print(colored(thermistor_four), colored(str('%.1f'%data_array[4][3]) + ' C', component_status(component = 't4', value = data_array[4][3])))
-        print(colored(current_sensor_o), colored(str('%.1f'%data_array[4][4]) + ' A', component_status(component = 'cs', value = data_array[4][4])))
-        print(colored("Last Backed Up:"), colored(recent_backup_date, 'magenta'))
+        print(colored(region_one), colored(str('%.1f'%data_array[1][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[1][1]) + '% RH', ambient_status(data_array[1][1])[0]))
+        print(colored(region_two), colored(str('%.1f'%data_array[2][0]) + ' C', 'green'), colored('&'), colored(str('%.1f'%data_array[2][1]) + '% RH', ambient_status(data_array[1][1])[0]))
+        print(colored(thermistor_one), colored(str('%.1f'%data_array[4][0]) + ' C', component_status(component = 't1', value = data_array[4][0])[0]))
+        print(colored(thermistor_two), colored(str('%.1f'%data_array[4][1]) + ' C', component_status(component = 't2', value = data_array[4][1])[0]))
+        print(colored(thermistor_three), colored(str('%.1f'%data_array[4][2]) + ' C', component_status(component = 't3', value = data_array[4][2])[0]))
+        print(colored(thermistor_four), colored(str('%.1f'%data_array[4][3]) + ' C', component_status(component = 't4', value = data_array[4][3])[0]))
+        print(colored(current_sensor_o), colored(str('%.1f'%data_array[4][4]) + ' A', component_status(component = 'cs', value = data_array[4][4])[0]))
+        print(colored('===================System Status===================','blue'))
+        print(colored('Region One'), colored(ambient_status(data_array[1][1])[1]))
+        print(colored('Region Two'), colored(ambient_status(data_array[1][1])[1]))
+        print(colored('Thermistor One'), colored(component_status(component = 't1', value = data_array[4][0])[1], component_status(component = 't1', value = data_array[4][0])[0]))
+        print(colored('Thermistor Two'), colored(component_status(component = 't2', value = data_array[4][1])[1], component_status(component = 't2', value = data_array[4][1])[0]))
+        print(colored('Thermistor Three'), colored(component_status(component = 't3', value = data_array[4][2])[1], component_status(component = 't3', value = data_array[4][1])[0]))
+        print(colored('Thermistor Four'), colored(component_status(component = 't4', value = data_array[4][3])[1], component_status(component = 't4', value = data_array[4][1])[0]))
+        print(colored('Current Draw'), colored(component_status(component = 'cs', value = data_array[4][4])[1], component_status(component = 'cs', value = data_array[4][1])[0]))
+        print(colored("Data Last Backed Up:"), colored(recent_backup_date, 'magenta'))
+        print(colored('=======PT2 Instrument Monitoring Sub-Assembly=======','blue'))
+        print('')
 
         current_interval += update_interval
         current2_interval += update_interval
