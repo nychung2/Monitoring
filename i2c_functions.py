@@ -71,3 +71,10 @@ class ADS7828(object):
         resistance = (voltage * resistor) / (v_in * (1 - voltage / v_in))
         temperature = 310.1 * pow(resistance / 1000, -0.1387) - 138.7
         return temperature
+
+    def current(self, input):
+        value = self.read(channel = input)
+        v_ref = 0.817
+        voltage = value * v_ref / 4095
+        amp = voltage / 0.400
+        return amp

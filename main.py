@@ -40,7 +40,7 @@ def collect_data(sht35_a, sht35_b, am2302, adc):
         adc_array.append(adc.temperature(thermistor = t2))
         adc_array.append(adc.temperature(thermistor = t3))
         adc_array.append(adc.temperature(thermistor = t4))
-        adc_array.append(0) # add p1 CS data.
+        adc_array.append(adc.current(input = p1)) # add p1 CS data.
     except:
         adc_array = None
 
@@ -91,13 +91,6 @@ def component_status(component = None, value = None, log_file = None):
             return 'green', 'operating normally'
     return 'green'
 
-def write_new_file(array = None, path = None, timestamp = None):
-    try:
-        a_file = open(path + '/' + timestamp + '.txt', "w")
-        array.tofile(path + '/' + timestamp + '.txt', ',', '%.1f',)
-    except:
-        print('Writing Failed')
-
 # Wait for input from Super Capacitors, then Save Files and Shutdown System.
 def shutdown_protocol(sensor_log = None, error_log = None):
     os.shutdown()
@@ -146,7 +139,6 @@ if __name__ == '__main__':
         print("ADS7828 Sensor Failed to Connect")
 
     current_interval = 0
-    current2_interval = 0
     recent_backup_date = 'N/A'
     storage_array = ['timestamp', 'sht1', 'sht2', 'am_sens', 'adc_array']
     time.sleep(3)
@@ -155,21 +147,28 @@ if __name__ == '__main__':
         data_array = collect_data(sht35_a = first_sht35, sht35_b = second_sht35, am2302 = am2302_sensor, adc = adc_sensor)
         
         path = '/home/pi/DataLogs/'
+
+        if not os.path.exists(path + str(dt.date.today()) + '.csv'):
+            with open(path + str(dt.date.today()) + '.csv') as fe:
+                fe.write('timestamp,sht1,sht2,am_sens,adc_array')
+                fe.write('\n')
+                fe.close()
+            date_to_remove = str(dt.datetime.now - dt.timedelta(days=7))
+            date_to_remove = date_to_remove[0:10]
+            if os.path.exists(path + date_to_remove + '.csv'):
+                os.remove(path + date_to_remove + '.csv')
         
         if (current_interval / record_interval == 1): 
-            np.vstack((storage_array, np.asarray(data_array)))
-            #print(storage_array)
-            if (current2_interval / store_interval == 1):
+            path_temp = path + str(dt.date.today())
+            with open(path_temp + '.csv', 'a') as fd:
                 recent_backup_date = str(dt.datetime.now())
-                
-                path_temp = path + str(dt.date.today())
-                if (not os.path.isdir(path_temp)):
-                    os.mkdir(path_temp)
-                
-                write_new_file(array = storage_array, path = path_temp, timestamp = recent_backup_date)
-                
-                storage_array = ['timestamp', 'sht1', 'sht2', 'am_sens', 'adc_array']
-                current2_interval = 0
+                array_string = str(data_array)
+                array_string.replace('[', '')
+                array_string.replace(']', '')
+                fd.write(array_string)
+                fd.write('\n')
+                fd.close()
+
             current_interval = 0
             
 
@@ -195,5 +194,4 @@ if __name__ == '__main__':
         print('')
 
         current_interval += update_interval
-        current2_interval += update_interval
         time.sleep(update_interval)
